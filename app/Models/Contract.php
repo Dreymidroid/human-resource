@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Models;
+
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
+class Contract extends Model
+{
+    //
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
+    }
+
+    public function designation(): BelongsTo
+    {
+        return $this->belongsTo(Designation::class);
+    }
+
+
+    public function scopeInCompany($query)
+    {
+        return $query->whereHas('designation', function ($q) {
+            $q->inCompany();
+        });
+    }
+
+    public function getDurationAttribute(): string
+    {
+        return Carbon::parse($this->start_date)
+            ->diffForHumans($this->end_date);
+    }
+
+    public function scopeSearchByEmployee($query, $name)
+    {
+        return $query->whereHas('employee', function ($q) use ($name) {
+            $q->where('name', 'like', '%' . $name . '%');
+        });
+    }
+
+    public function getTotalEarnings($monthyear)
+    {
+        // Can change the days in month to attended days
+        return $this->rate_type == 'monthly' ? $this->rate : $this->rate * Carbon::parse($monthyear)->daysInMonth();
+    }
+}
