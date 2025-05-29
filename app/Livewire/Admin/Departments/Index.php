@@ -21,6 +21,7 @@ class Index extends Component
     {
         return view('livewire.admin.departments.index', [
             'departments' => Department::inCompany()->paginate(5),
+
         ]);
     }
 }

@@ -14,15 +14,10 @@ class Index extends Component
     use WithPagination, WithoutUrlPagination;
 
 
-    public function selectCompany($id) {
-        Session::put('company_id', 1);
-        Session::flash('success', 'Company id set successfully');
-    }
-
-    public function index($id) {
+    public function delete($id)
+    {
         $company = Company::find($id);
-        if($company->logo)
-        {
+        if ($company->logo) {
             Storage::disk('public')->delete($company->logo);
         }
 

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\URL;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -16,11 +17,11 @@ class HasCompanyContext
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(session()->has('company_id')) {
+        if(Session::has('company_id')) {
             return $next($request);
         } 
         
-        session()->flash('error', 'Please select a company to continue.');
+        Session::flash('errorMsg', 'Please select a company to continue.');
         return redirect(URL::previous());
     }
 }

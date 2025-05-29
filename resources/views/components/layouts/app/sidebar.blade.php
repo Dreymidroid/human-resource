@@ -19,7 +19,7 @@
                     <flux:navlist.item icon="building-office" :href="route('companies.index')" :current="request()->routeIs('companies.index')" wire:navigate>{{ __('List of Companies') }}</flux:navlist.item>
                     <flux:navlist.item icon="plus" :href="route('companies.create')" :current="request()->routeIs('companies.create')" wire:navigate>{{ __('Create a new Company') }}</flux:navlist.item>
                 </flux:navlist.group>
-                @if(session('company_id'))
+                {{-- @if(session('company_id')) --}}
                 <flux:navlist.group :heading="__('Departments')" class="grid">
                     <flux:navlist.item icon="building-office-2" :href="route('departments.index')" :current="request()->routeIs('departments.index')" wire:navigate>{{ __('List of Department') }}</flux:navlist.item>
                     <flux:navlist.item icon="plus" :href="route('departments.create')" :current="request()->routeIs('departments.create')" wire:navigate>{{ __('Create Department') }}</flux:navlist.item>
@@ -41,7 +41,7 @@
                     <flux:navlist.item icon="users" :href="route('payments.index')" :current="request()->routeIs('payments.*')" wire:navigate>{{ __('Payroll Payments') }}</flux:navlist.item>
                 </flux:navlist.group>
 
-                @endif
+                {{-- @endif --}}
             </flux:navlist>
 
             <flux:spacer />
@@ -60,6 +60,11 @@
                     @endforeach
                 </flux:menu>
             </flux:dropdown>
+
+            @if(session()->has('errorMsg'))
+            <x-auth-session-status class="text-center text-red-500" :status="session('errorMsg')" />
+            @endif
+
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
                 {{ __('Repository') }}

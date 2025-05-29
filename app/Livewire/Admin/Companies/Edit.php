@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Companies;
 
 use App\Models\Company;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
@@ -27,7 +28,8 @@ class Edit extends Component
 
     public function mount($id)
     {
-        $company = Company::find($id);
+        $this->company = Company::find($id);
+        $logo = $this->company->logo_url;
     }
 
     public function save()
@@ -42,10 +44,11 @@ class Edit extends Component
         $this->company->save();
         session()->flash('Success', 'Company updated successfully.');
 
-        return $this->redirectIntended('admin.companies.index');
+        return $this->redirectIntended(route('companies.index'), navigate: true);
     }
+
     public function render()
     {
-        return view('livewire.admin.companies.edit');
+        return view('livewire.admin.companies.edit', ['company' => $this->company]);
     }
 }

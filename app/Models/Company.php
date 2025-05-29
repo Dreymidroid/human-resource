@@ -33,6 +33,6 @@ class Company extends Model
 
     public function getLogoUrlAttribute(): string
     {
-        return $this->logo ? asset('storage/' . $this->logo) : asset('images/default-logo.png');
+        return $this->logo ? asset('storage/' . $this->logo) : asset('images/default-logo.jpg');
     }
 }
