@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\Designation;
 
+use App\Models\Department;
 use App\Models\Designation;
 use Livewire\Component;
 
@@ -19,7 +20,7 @@ class Edit extends Component
 
     public function mount($id)
     {
-        $this->designation =  Designation::find($id);
+        $this->designation = Designation::find($id);
     }
 
     public function save()
@@ -27,11 +28,14 @@ class Edit extends Component
         $this->validate();
         $this->designation->save();
         session()->flash('Success', 'Designation updated successfully.');
-        return $this->redirectIntended('designation.index');
+        return $this->redirectIntended(route('designations.index'));
     }
 
     public function render()
     {
-        return view('livewire.admin.designation.edit');
+        return view(
+            'livewire.admin.designation.edit',
+            ['departments' => Department::inCompany()->get()]
+        );
     }
 }

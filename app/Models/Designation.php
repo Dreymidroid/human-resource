@@ -22,7 +22,7 @@ class Designation extends Model
 
     public function scopeInCompany($query)
     {
-        return $query->whereHas('company_id', function ($q) {
+        return $query->whereHas('department', function ($q) {
             $q->inCompany();
         });
     }

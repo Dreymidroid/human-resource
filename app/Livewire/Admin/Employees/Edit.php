@@ -19,13 +19,13 @@ class Edit extends Component
             'employee.email' => 'required|email|max:255',
             'employee.phone' => 'required|string|max:255',
             'employee.address' => 'required|string|max:255',
-            'employee.designation_id' => 'required|exists:designation,id',
+            'employee.designation_id' => 'required|exists:designations,id',
         ];
     }
 
     public function mount($id)
     {
-        $employee = Employee::find($id);
+        $this->employee = Employee::find($id);
         $this->department_id = $this->employee->designation->department_id;
     }
 
@@ -33,7 +33,7 @@ class Edit extends Component
         $this->validate();
         $this->employee->save();
         session()->flash('success', 'Employee updated successfully');
-        return $this->redirectIntended('employees.index');
+        return $this->redirectIntended(route('employees.index'), true);
     }
 
     public function render()

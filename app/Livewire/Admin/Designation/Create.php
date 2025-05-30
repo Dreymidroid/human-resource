@@ -28,11 +28,14 @@ class Create extends Component
         $this->validate();
         $this->designation->save();
         session()->flash('Success', 'Designation created successfully.');
-        return $this->redirectIntended('designation.index');
+        return $this->redirectIntended(route('designations.index'));
     }
 
     public function render()
     {
-        return view('livewire.admin.designation.create');
+        return view(
+            'livewire.admin.designation.create',
+            ['departments' => Department::inCompany()->get()]
+        );
     }
 }

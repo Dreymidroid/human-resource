@@ -9,8 +9,7 @@
         <flux:select label="Department" wire:model.live="designation.department_id" :invalid="$errors->has('designation.department_id')">
         <option selected>Select Department</option>
         @foreach ($departments as $department)
-        <option value="{{ $department->id }}">{{$department->name}}</option>
-            
+        <option value="{{ $department->id }}">{{$department->name}}</option> 
         @endforeach
         </flux:select>
         <flux:input label='Designation name' wire:model.live='designation.name' :invalid="$errors->has('designation.name')" type='text' />

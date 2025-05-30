@@ -21,7 +21,7 @@ class Index extends Component
     public function render()
     {
         return view('livewire.admin.designation.index', [
-            'designation'=> Designation::inCompany()->paginate(5),
+            'designations'=> Designation::inCompany()->latest()->paginate(5),
         ]);
     }
 }
